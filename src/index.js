@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
-import store from "./redux/store.js";
 import App from "./App";
 import "./index.css";
+import store from "./redux/store.js";
 import { login } from "./redux/slices.js";
 
 // console.log(login);
