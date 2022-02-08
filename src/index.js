@@ -5,7 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import "./index.css";
 import store from "./redux/store.js";
-import { login } from "./redux/slices.js";
+// import { login } from "./redux/slices.js";
 
 // console.log(login);
 // console.log(store);

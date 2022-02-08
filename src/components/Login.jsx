@@ -5,32 +5,37 @@ import { skipToken } from "@reduxjs/toolkit/query";
 import {
   useGetUsersQuery,
   useGetUserByIdQuery,
+  useLoginUserMutation,
 } from "./../services/userApi.js";
 
 const Login = () => {
+  const [loginUserData] = useLoginUserMutation();
+
   // redux SET
   // const dispatch = useDispatch();
   // redux GET
   // const user = useSelector((state) => state.user);
   const { data, isError, isLoading } = useGetUsersQuery();
 
-  const [chosenUserId, setChosenUserId] = useState(skipToken); // initialize with skipToken to skip at first
-  const userById = useGetUserByIdQuery(chosenUserId);
-  console.log("USER!", userById);
+  const [chosenUserId, setChosenUserId] = useState(1); // initialize with skipToken to skip at first
+  // const userById = useGetUserByIdQuery(chosenUserId);
+  // console.log("USER!", userById);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
-    const id = formData.get("id");
-    console.log(id);
+    // const id = formData.get("id");
+    const name = formData.get("name");
+    const body = { name };
 
-    setChosenUserId(id);
+    loginUserData(body);
+    // setChosenUserId(id);
     // dispatch(login());
   };
+
   return (
     <section>
-      <h1>User by id: {userById.data.name}</h1>
       {isError ? (
         <>Error...</>
       ) : isLoading ? (
@@ -43,7 +48,8 @@ const Login = () => {
       ) : null}
       <form onSubmit={handleSubmit}>
         <label>
-          ID: <input name="id" type="text" defaultValue="1" />
+          {/* ID: <input name="id" type="text" defaultValue="1" /> */}
+          name: <input name="name" type="text" defaultValue="Fake User" />
         </label>{" "}
         <button type="submit">Login</button>
       </form>

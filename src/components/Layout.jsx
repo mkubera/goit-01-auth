@@ -1,6 +1,14 @@
 import { Link, Outlet } from "react-router-dom";
+import { useLogoutUserMutation } from "./../services/userApi.js";
 
 const Layout = () => {
+  const [logoutUserData] = useLogoutUserMutation();
+
+  const logoutEvent = (e) => {
+    const body = { name: "Fake User" };
+    logoutUserData(body);
+  };
+
   return (
     <div>
       <ul>
@@ -17,7 +25,7 @@ const Layout = () => {
           <Link to="/contacts">Contacts</Link>
         </li>
         <li>
-          <button>Logout</button>
+          <button onClick={logoutEvent}>Logout</button>
         </li>
       </ul>
 
