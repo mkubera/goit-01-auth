@@ -1,18 +1,24 @@
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, Link, Outlet } from "react-router-dom";
 import {
   useGetUserByIdQuery,
   useLogoutUserMutation,
 } from "./../services/userApi.js";
+import { setUserId } from "./../redux/slices.js";
 
 const Layout = () => {
-  const userId = 1; // TODO: should be from Redux (after login!)
+  const userId = useSelector((state) => state.user.userId);
+  const dispatch = useDispatch();
   const { data, isError, isLoading } = useGetUserByIdQuery(userId);
   const [logoutUserData] = useLogoutUserMutation();
   const navigate = useNavigate();
 
   const logoutEvent = (e) => {
     const body = { name: "Fake User" };
-    logoutUserData(body);
+    logoutUserData(body).then(() => {
+      dispatch(setUserId(null));
+    });
+
     navigate("/", { replace: true });
   };
 
@@ -45,9 +51,9 @@ const Layout = () => {
         <>Error...</>
       ) : isLoading ? (
         <>Loading...</>
-      ) : data ? (
+      ) : data || data === null ? (
         <>
-          <h3>{data.loggedIn ? `Hello, ${data.name}.` : "Pls, log in."}</h3>
+          <h3>{data?.loggedIn ? `Hello, ${data.name}.` : ""}</h3>
           {navLinks}
         </>
       ) : null}

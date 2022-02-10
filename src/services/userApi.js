@@ -31,11 +31,8 @@ const userApi = createApi({
         method: "POST",
         body,
       }),
-      transformResponse: (response, meta, arg) => {
-        console.log(response);
-        console.log(meta);
-        console.log(arg);
-        return response;
+      transformResponse: ({ userId }) => {
+        return userId;
       },
       invalidatesTags: ["Users"],
     }),

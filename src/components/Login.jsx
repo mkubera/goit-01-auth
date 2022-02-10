@@ -1,9 +1,12 @@
 import { useLoginUserMutation } from "./../services/userApi.js";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserId } from "./../redux/slices.js";
 
 const Login = () => {
   const [loginUserData] = useLoginUserMutation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +15,9 @@ const Login = () => {
     const name = formData.get("name");
     const body = { name };
 
-    loginUserData(body);
+    loginUserData(body).then(({ data }) => {
+      dispatch(setUserId(data));
+    });
     navigate("/contacts", { replace: true });
   };
 
