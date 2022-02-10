@@ -31,6 +31,13 @@ let data = {
   ],
 };
 
+// One User by Id
+app.get("/api/v1/users/:id/contacts", (req, res) => {
+  const userIdReq = Number(req.params.id);
+  const contacts = data.contacts.filter(({ userId }) => userId === userIdReq);
+  res.json(contacts);
+});
+
 // All Contacts
 app.get("/api/v1/contacts/:userId", (req, res) => {
   const contacts = data.contacts.filter(
@@ -73,8 +80,9 @@ app.post("/api/v1/users/login", (req, res) => {
     user.name === userName ? { ...user, loggedIn: true } : user
   );
   data.users = newUsers;
+  const user = newUsers.find(({ name }) => name === userName);
 
-  res.json({ code: 200 });
+  res.json({ code: 200, userId: user.id });
 });
 
 // Logout

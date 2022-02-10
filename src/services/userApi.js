@@ -7,7 +7,7 @@ const API_URL = "http://localhost:3100/api/v1/";
 const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
-  tagTypes: ["Users"],
+  tagTypes: ["Users", "Contacts"],
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => `users`,
@@ -31,6 +31,12 @@ const userApi = createApi({
         method: "POST",
         body,
       }),
+      transformResponse: (response, meta, arg) => {
+        console.log(response);
+        console.log(meta);
+        console.log(arg);
+        return response;
+      },
       invalidatesTags: ["Users"],
     }),
     logoutUser: builder.mutation({
@@ -40,6 +46,10 @@ const userApi = createApi({
         body,
       }),
       invalidatesTags: ["Users"],
+    }),
+    getContactsByUserId: builder.query({
+      query: (userId) => `users/${userId}/contacts`,
+      providesTags: ["Contacts"],
     }),
   }),
 });
@@ -54,6 +64,7 @@ const {
   useRegisterUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
+  useGetContactsByUserIdQuery,
 } = userApi;
 export {
   userApi,
@@ -62,4 +73,5 @@ export {
   useRegisterUserMutation,
   useLoginUserMutation,
   useLogoutUserMutation,
+  useGetContactsByUserIdQuery,
 };

@@ -8,7 +8,7 @@ const Register = () => {
     e.preventDefault();
 
     const body = {
-      name: "Fake User 3",
+      name: "New User",
     };
     data(body);
   };
