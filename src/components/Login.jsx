@@ -2,7 +2,6 @@ import { useLoginUserMutation } from "./../services/userApi.js";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserId } from "./../redux/slices.js";
-// import logo from "./../images/logo.svg";
 
 const Login = () => {
   const [loginUserData] = useLoginUserMutation();
@@ -25,7 +24,6 @@ const Login = () => {
   return (
     <section>
       <div className="img-logo"></div>
-      {/* <img src={logo} alt="" /> */}
       <form onSubmit={handleSubmit}>
         <label>
           {/* ID: <input name="id" type="text" defaultValue="1" /> */}

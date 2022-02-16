@@ -1,5 +1,3 @@
-import React from "react";
-
 const RequireAuth = ({ children }) => {
   return children;
 };
